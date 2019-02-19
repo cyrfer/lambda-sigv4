@@ -1,1 +1,13 @@
-{}
+{
+  "version": "0.1.1",
+  "dependencies": {
+    "aws-sdk": "^2.405.0",
+    "got": "^9.6.0",
+    "sigv4": "omitted"
+  },
+  "scripts": {
+    "zip": "zip -r archive.zip . -x '.*'",
+    "s3": "aws s3 cp archive.zip s3://omitted-builds-us-east-2/lambda-sigv4/build-$BUILD_VERSION.zip --profile omitted",
+    "build": "npm run zip && BUILD_VERSION=5 npm run s3"
+  }
+}

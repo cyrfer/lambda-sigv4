@@ -3,5 +3,6 @@ version: 0.2
 phases:
   build:
     commands:
-      - echo do the thing
-      
+      # ".*" excludes content that starts with '.', e.g. ".git"
+      - zip -r build.zip . -x ".*"
+      - aws s3 cp build.zip omitted-builds/

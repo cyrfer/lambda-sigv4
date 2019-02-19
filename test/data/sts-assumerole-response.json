@@ -1,0 +1,15 @@
+{
+    "ResponseMetadata": {
+        "RequestId": "omitted"
+    },
+    "Credentials": {
+        "AccessKeyId": "omitted",
+        "SecretAccessKey": "omitted",
+        "SessionToken": "omitted",
+        "Expiration": "2019-02-19T10:04:50.000Z"
+    },
+    "AssumedRoleUser": {
+        "AssumedRoleId": "omitted:cross-account-lambda-test",
+        "Arn": "arn:aws:sts::omitted:assumed-role/cross-account-usage/cross-account-lambda-test"
+    }
+}

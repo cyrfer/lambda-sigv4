@@ -59,3 +59,13 @@ typings/
 
 # next.js build output
 .next
+
+# IDEs
+.vscode
+.idea
+
+# OS
+.DS_Store
+
+# Builds
+archive.zip
