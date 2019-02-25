@@ -10,10 +10,10 @@ const config = {
     signing: {
         // region target needed when signing
         region: process.env.TARGET_AWS_REGION,
-        // // lambda environment could provide credentials for signing
-        // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        // token: process.env.AWS_SESSION_TOKEN,
+        // lambda environment could provide credentials for signing
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        token: process.env.AWS_SESSION_TOKEN,
     }
 }
 
@@ -38,7 +38,7 @@ const assumeRole = ({sts}, roleArn) => {
                 console.error(JSON.stringify(err));
                 return reject(err);
             }
-            resolve(data.Credentials || {});
+            resolve(stsToSigv4(data.Credentials || {}));
         });
     });
 };
@@ -56,9 +56,9 @@ exports.handler = async (event, context) => {
         services = initServices();
     }
 
-    return assumeRole(services, config.roleArn)
+    return (config.roleArn ? assumeRole(services, config.roleArn) : Promise.resolve(config.signing))
     .then(creds => {
-        const signed = sigv4(config.request, stsToSigv4(creds));
+        const signed = sigv4(config.request, creds);
         return got(config.request.url, {
             headers: signed.headers,
         })
